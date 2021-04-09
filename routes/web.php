@@ -18,6 +18,7 @@ Route::get('/', function () {
 //backend
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::resource('karyawan', 'KaryawanController');
     Route::resource('user', 'UserController');
 });
 Auth::routes();
