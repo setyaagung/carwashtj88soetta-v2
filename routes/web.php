@@ -21,6 +21,10 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('kendaraan', 'KendaraanController');
     Route::resource('paket', 'PaketController');
     Route::resource('transaksi', 'TransaksiController');
+    //cart
+    Route::post('/transaksi/additem/{paket}', 'TransaksiController@addItem')->name('transaksi.additem');
+    Route::delete('/transaksi/removeitem/{paket}', 'TransaksiController@removeItem')->name('transaksi.removeitem');
+    Route::post('/transaksi/updatecart/{paket}', 'TransaksiController@updatecart')->name('transaksi.updatecart');
     Route::resource('karyawan', 'KaryawanController');
     Route::resource('user', 'UserController');
 });

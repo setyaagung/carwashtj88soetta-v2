@@ -15,7 +15,7 @@ class CreateTransaksiTable extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('no_invoice')->unique();
+            $table->string('no_invoice');
             $table->unsignedBigInteger('user_id');
             $table->date('tanggal');
             $table->string('shift');
