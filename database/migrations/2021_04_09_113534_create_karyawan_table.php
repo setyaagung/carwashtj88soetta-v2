@@ -21,6 +21,9 @@ class CreateKaryawanTable extends Migration
             $table->text('alamat')->nullable();
             $table->string('no_telp')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

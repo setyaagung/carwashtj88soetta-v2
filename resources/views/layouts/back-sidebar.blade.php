@@ -29,6 +29,35 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link {{ (request()->segment(1) == 'kendaraan') ? 'active' : '' }} {{ (request()->segment(1) == 'paket') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-folder"></i>
+                        <p>
+                            Master Data
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('kendaraan.index')}}" class="nav-link {{ (request()->segment(1) == 'kendaraan') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kendaraan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('paket.index')}}" class="nav-link {{ (request()->segment(1) == 'paket') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Paket</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.create')}}" class="nav-link {{ (request()->segment(1) == 'transaksi') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-money-bill-alt"></i>
+                        <p>Transaksi</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('karyawan.index')}}" class="nav-link {{ (request()->segment(1) == 'karyawan') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-people-carry"></i>

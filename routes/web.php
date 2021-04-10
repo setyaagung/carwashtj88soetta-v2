@@ -18,6 +18,9 @@ Route::get('/', function () {
 //backend
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::resource('kendaraan', 'KendaraanController');
+    Route::resource('paket', 'PaketController');
+    Route::resource('transaksi', 'TransaksiController');
     Route::resource('karyawan', 'KaryawanController');
     Route::resource('user', 'UserController');
 });
