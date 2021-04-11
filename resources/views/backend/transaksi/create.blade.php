@@ -31,12 +31,31 @@
                                     </button>
                                 </div>
                             @endif
+
+                            @if ($message = Session::get('errorTransaksi'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> {{ $message }}.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+
+                            @if ($message = Session::get('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Success!</strong> {{ $message }}.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
                             <div style="min-height: 45.4vh">
                                 <table class="table table-striped table-bordered table-sm">
                                     <thead class="bg-dark text-white">
                                         <tr>
                                             <th>No</th>
                                             <th>Paket</th>
+                                            <th>Shift</th>
                                             <th>Jenis Kendaraan</th>
                                             <th>Nama Kendaraan</th>
                                             <th>Plat Nomor</th>
@@ -52,22 +71,50 @@
                                                 <form action="{{ route('transaksi.updatecart',$item['rowId'])}}" method="POST">
                                                     @csrf
                                                     <td>
-                                                        <select name="kendaraan_id" class="form-control form-control-sm @error('kendaraan_id') is-invalid @enderror">
+                                                        <select name="shift" class="form-control form-control-sm @error('shift') is-invalid @enderror" required>
+                                                            <option value="">-- Shift --</option>
+                                                            <option value="pagi" {{ $item['shift'] == "pagi" ? "selected":""}}>Pagi</option>
+                                                            <option value="sore" {{ $item['shift'] == "sore" ? "selected":""}}>Sore</option>
+                                                            <option value="malam" {{ $item['shift'] == "malam" ? "selected":""}}>Malam</option>
+                                                        </select>
+                                                        @error('shift')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </td>
+                                                    <td>
+                                                        <select name="kendaraan_id" class="form-control form-control-sm @error('kendaraan_id') is-invalid @enderror" required>
                                                             <option value="">-- Jenis Kendaraan --</option>
                                                             @foreach ($kendaraans as $kendaraan)
                                                                 <option value="{{ $kendaraan->id}}" {{ $item['kendaraan_id'] == $kendaraan->id ? "selected":"" }}>{{ $kendaraan->jenis_kendaraan}}</option>
                                                             @endforeach
                                                         </select>
+                                                        @error('kendaraan_id')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control form-control-sm" name="nama_kendaraan" value="{{ $item['nama_kendaraan']}}">
+                                                        <input type="text" class="form-control form-control-sm @error('nama_kendaraan') is-invalid @enderror" name="nama_kendaraan" value="{{ $item['nama_kendaraan']}}" required>
+                                                        @error('nama_kendaraan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
                                                     </td>
                                                     <td>
                                                         <div class="input-group">
-                                                            <input type="text" name="plat_nomor" class="form-control form-control-sm" value="{{ $item['plat_nomor']}}">
+                                                            <input type="text" name="plat_nomor" class="form-control form-control-sm @error('plat_nomor') is-invalid @enderror" value="{{ $item['plat_nomor']}}" required>
                                                             <div class="input-group-append">
                                                                 <button type="submit" class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
                                                             </div>
+                                                            @error('plat_nomor')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
                                                         </div>
                                                     </td>
                                                 </form>
@@ -84,7 +131,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td class="text-center" colspan="7">Empty Cart</td>
+                                                <td class="text-center" colspan="8">Empty Cart</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -97,14 +144,27 @@
                                         Rp. {{ number_format($data_total['sub_total'],2,',','.') }} </th>
                                 </tr>
                                 <tr>
+                                    <th>
+                                        <form action="{{ route('transaksi.create') }}" method="get">
+                                            Discount 10%
+                                            <input type="checkbox" {{ $data_total['diskon'] > 0 ? "checked" : ""}} name="diskon"
+                                                value="true" onclick="this.form.submit()">
+                                        </form>
+                                    </th>
+                                    <th class="text-right">Rp.
+                                        {{ number_format($data_total['diskon'],2,',','.') }}</th>
+                                </tr>
+                                <tr>
                                     <th>Total</th>
-                                    <th class="text-right font-weight-bold">Rp.
-                                        {{ number_format($data_total['total'],2,',','.') }}</th>
+                                    <th class="text-right font-weight-bold">
+                                        Rp. {{ number_format($data_total['total'],2,',','.') }}
+                                    </th>
+
                                 </tr>
                             </table>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <form action="#" method="POST">
+                                    <form action="{{ route('transaksi.clear')}}" method="POST">
                                         @csrf
                                         <button class="btn btn-danger btn-md btn-block" onclick="return confirm('Apakah anda yakin ingin meng-clear cart ?');" type="submit">
                                             Clear
@@ -115,7 +175,7 @@
                                     <a class="btn btn-primary btn-md btn-block" href="{{ route('transaksi.index')}}">History</a>
                                 </div>
                                 <div class="col-sm-4">
-                                    <button class="btn btn-success btn-md btn-block" data-toggle="modal" data-target="#modalPay">Bayar</button>
+                                    <button class="btn btn-success btn-md btn-block" id="payButton" disabled data-toggle="modal" data-target="#modalPay">Bayar</button>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +237,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="#" method="POST">
+                <form action="{{ route('transaksi.pay')}}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <table class="table table-sm table-borderless">
@@ -186,6 +246,13 @@
                                 <th width="40%" class="text-right">Rp.
                                     {{ number_format($data_total['sub_total'],2,',','.') }} </th>
                             </tr>
+                            @if($data_total['diskon'] > 0)
+                                <tr>
+                                    <th>Discount 10%</th>
+                                    <th class="text-right">Rp.
+                                        {{ number_format($data_total['diskon'],2,',','.') }}</th>
+                                </tr>
+                            @endif
                         </table>
                         <div class="form-group">
                             <label>Input Nominal</label>
@@ -213,13 +280,13 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
-            //reload
-            $('.btn-refresh').click(function(e){
-                e.preventDefault();
-                $('.preloader').fadeIn();
-                location.reload();
-            });
-
+            let totalBayar = {{ $data_total['total']}}
+            const payButton = document.getElementById("payButton");
+            if(totalBayar === 0){
+                payButton.disabled = true;
+            }else{
+                payButton.disabled = false;
+            }
             $('#modalPay').on('shown.bs.modal', function(){
                 $('#oke').trigger('focus');
             });
