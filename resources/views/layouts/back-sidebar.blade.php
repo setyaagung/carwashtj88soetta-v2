@@ -29,33 +29,16 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link {{ (request()->segment(1) == 'kendaraan') ? 'active' : '' }} {{ (request()->segment(1) == 'paket') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-folder"></i>
-                        <p>
-                            Master Data
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
+                <li class="nav-item">
+                    <a href="{{ route('paket.index')}}" class="nav-link {{ (request()->segment(1) == 'paket') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-car"></i>
+                        <p>Paket Cuci</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('kendaraan.index')}}" class="nav-link {{ (request()->segment(1) == 'kendaraan') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Kendaraan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('paket.index')}}" class="nav-link {{ (request()->segment(1) == 'paket') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Paket</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('transaksi.create')}}" class="nav-link {{ (request()->segment(1) == 'transaksi') ? 'active' : '' }}">
+                    <a href="{{ route('rekap.create')}}" class="nav-link {{ (request()->segment(1) == 'rekap') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-money-bill-alt"></i>
-                        <p>Transaksi</p>
+                        <p>Rekap Pendapatan</p>
                     </a>
                 </li>
                 <li class="nav-item">

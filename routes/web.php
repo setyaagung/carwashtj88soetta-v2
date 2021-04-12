@@ -18,15 +18,14 @@ Route::get('/', function () {
 //backend
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::resource('kendaraan', 'KendaraanController');
     Route::resource('paket', 'PaketController');
-    Route::resource('transaksi', 'TransaksiController');
-    //cart transaksi
-    Route::post('/transaksi/additem/{paket}', 'TransaksiController@addItem')->name('transaksi.additem');
-    Route::delete('/transaksi/removeitem/{paket}', 'TransaksiController@removeItem')->name('transaksi.removeitem');
-    Route::post('/transaksi/updatecart/{paket}', 'TransaksiController@updatecart')->name('transaksi.updatecart');
-    Route::post('/transaksi/clear', 'TransaksiController@clear')->name('transaksi.clear');
-    Route::post('/transaksi/pay', 'TransaksiController@pay')->name('transaksi.pay');
+    Route::resource('rekap', 'RekapController');
+    //cart rekap
+    Route::post('/rekap/additem/{paket}', 'RekapController@addItem')->name('rekap.additem');
+    Route::delete('/rekap/removeitem/{paket}', 'RekapController@removeItem')->name('rekap.removeitem');
+    Route::post('/rekap/updatecart/{paket}', 'RekapController@updatecart')->name('rekap.updatecart');
+    Route::post('/rekap/clear', 'RekapController@clear')->name('rekap.clear');
+    Route::post('/rekap/verifikasi', 'RekapController@verifikasi')->name('rekap.verifikasi');
     //pengeluaran
     Route::resource('pengeluaran', 'PengeluaranController');
     Route::resource('karyawan', 'KaryawanController');

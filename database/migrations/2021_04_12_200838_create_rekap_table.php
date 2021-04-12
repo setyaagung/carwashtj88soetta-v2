@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransaksiTable extends Migration
+class CreateRekapTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,10 @@ class CreateTransaksiTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi', function (Blueprint $table) {
+        Schema::create('rekap', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('no_invoice');
-            $table->unsignedBigInteger('user_id');
-            $table->date('tanggal');
+            $table->date('tanggal_rekap');
             $table->string('shift');
-            $table->unsignedBigInteger('paket_id');
-            $table->unsignedBigInteger('kendaraan_id');
-            $table->string('nama_kendaraan');
-            $table->string('plat_nomor');
             $table->integer('total');
             $table->timestamps();
         });
@@ -35,6 +29,6 @@ class CreateTransaksiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('rekap');
     }
 }
