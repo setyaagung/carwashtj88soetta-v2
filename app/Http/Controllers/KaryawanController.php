@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Bon;
 use App\Model\Karyawan;
 use App\User;
 use Illuminate\Http\Request;
@@ -80,7 +81,9 @@ class KaryawanController extends Controller
      */
     public function show($id)
     {
-        //
+        $karyawan = Karyawan::findOrFail($id);
+        $data_bon = Bon::where('karyawan_id', $karyawan->id)->get();
+        return view('backend.karyawan.show', compact('karyawan', 'data_bon'));
     }
 
     /**

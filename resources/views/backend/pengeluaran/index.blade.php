@@ -1,6 +1,6 @@
 @extends('layouts.back-main')
 
-@section('title','Data Karyawan')
+@section('title','Data Pengeluaran')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -15,9 +15,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title font-weight-bold">
-                                Data Karyawan
+                                Data Pengeluaran
                             </h3>
-                            <a href="{{ route('karyawan.create')}}" class="btn btn-primary btn-sm float-right">Tambah</a>
+                            <a href="{{ route('pengeluaran.create')}}" class="btn btn-primary btn-sm float-right">Tambah</a>
                         </div>
                         <div class="card-body">
                             @if ($message = Session::get('create'))
@@ -48,25 +48,26 @@
                                 <thead>
                                     <tr>
                                         <th>NO</th>
-                                        <th>NAMA</th>
-                                        <th>JABATAN</th>
-                                        <th>ALAMAT</th>
-                                        <th>NO TELP</th>
+                                        <th>TANGGAL</th>
+                                        <th>NAMA PENGELUARAN</th>
+                                        <th>JENIS</th>
+                                        <th>KETERANGAN</th>
+                                        <th>JUMLAH</th>
                                         <th>AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($karyawans as $karyawan)
+                                    @foreach ($data_pengeluaran as $pengeluaran)
                                         <tr>
                                             <td>{{ $loop->iteration}}</td>
-                                            <td>{{ $karyawan->nama_karyawan}}</td>
-                                            <td>{{ $karyawan->jabatan}}</td>
-                                            <td>{{ $karyawan->alamat}}</td>
-                                            <td>{{ $karyawan->no_telp}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($pengeluaran->tanggal_pengeluaran)->isoFormat('D MMMM Y')}}</td>
+                                            <td>{{ $pengeluaran->nama_pengeluaran}}</td>
+                                            <td>{{ $pengeluaran->jenis}}</td>
+                                            <td>{{ $pengeluaran->keterangan}}</td>
+                                            <td>Rp. {{ number_format($pengeluaran->jumlah,0,',','.')}}</td>
                                             <td>
-                                                <a href="{{ route('karyawan.show',$karyawan->id)}}" class="btn btn-sm btn-info"><i class="fas fa-book"></i> Info</a>
-                                                <a href="{{ route('karyawan.edit',$karyawan->id)}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                                <form action="{{ route('karyawan.destroy', $karyawan->id)}}" method="POST" class="d-inline">
+                                                <a href="{{ route('pengeluaran.edit',$pengeluaran->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                <form action="{{ route('pengeluaran.destroy',$pengeluaran->id)}}" class="d-inline" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini??')"><i class="fas fa-trash"></i> Hapus</button>

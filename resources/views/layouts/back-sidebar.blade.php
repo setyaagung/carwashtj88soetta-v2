@@ -59,6 +59,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('pengeluaran.index')}}" class="nav-link {{ (request()->segment(1) == 'pengeluaran') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <p>Pengeluaran</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('karyawan.index')}}" class="nav-link {{ (request()->segment(1) == 'karyawan') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-people-carry"></i>
                         <p>Karyawan</p>
@@ -67,7 +73,7 @@
                 <li class="nav-item">
                     <a href="{{ route('user.index')}}" class="nav-link {{ (request()->segment(1) == 'user') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
-                        <p>Pengguna</p>
+                        <p>Kelola Akun</p>
                     </a>
                 </li>
             </ul>
