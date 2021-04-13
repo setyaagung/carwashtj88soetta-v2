@@ -246,7 +246,7 @@
                                         <td style="text-align: right">Jumlah</td>
                                         <td>
                                             <span class="jumlah">1</span>
-                                            <input id="jumlah" type="hidden" name="jumlah"/>
+                                            <input id="jumlah" type="hidden" name="jumlah" value="">
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -256,6 +256,7 @@
                         <h4 class="font-weight-bold mb-5">Rp. {{ number_format($data_total['total'],2,',','.') }}</h4>
                         <h6 class="font-weight-bold">Pendapatan Per Karyawan :</h6>
                         <h4 class="font-weight-bold mb-5" id="pendapatan_karyawan">Rp. {{ number_format($data_total['total']*40/100,2,',','.') }}</h4>
+                        <input type="hidden" name="pendapatan">
                         <h6 class="font-weight-bold text-primary">Pendapatan Kantor :</h6>
                         <h4 class="font-weight-bold text-primary" id="pendapatan_kantor">Rp. {{ number_format($data_total['total']*60/100,2,',','.') }}</h4>
                     </div>
@@ -318,6 +319,7 @@
             var pendapatan_karyawan = {{ $data_total['total']*40/100 }};
             $('.jumlah').html(count + $('.body_karyawan tr').length);
             $('#pendapatan_karyawan').html('Rp '+convertToRupiah(pendapatan_karyawan / (count + $('.body_karyawan tr').length))+',00');
+            $('input[name=jumlah]').val(count + $('.body_karyawan tr').length);
         }
 
         $('.remove').live('click', function(){
@@ -327,14 +329,14 @@
                 alert('Anda tidak dapat menghapus baris terakhir');
                 $('.jumlah').html(count + $('.body_karyawan tr').length);
                 $('#pendapatan_karyawan').html('Rp '+convertToRupiah(pendapatan_karyawan / (count + $('.body_karyawan tr').length))+',00');
+                $('input[name=jumlah]').val(count + $('.body_karyawan tr').length);
             }else{
                 $(this).parent().parent().remove();
                 $('.jumlah').html(count + $('.body_karyawan tr').length);
                 $('#pendapatan_karyawan').html('Rp '+convertToRupiah(pendapatan_karyawan / (count + $('.body_karyawan tr').length))+',00');
+                $('input[name=jumlah]').val(count + $('.body_karyawan tr').length);
             }
         });
-
-        $('input[name=jumlah]').val(0 + $('.body_karyawan tr').length);
 
         function convertToRupiah(number) {
 

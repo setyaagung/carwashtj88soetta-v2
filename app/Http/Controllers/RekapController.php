@@ -175,7 +175,6 @@ class RekapController extends Controller
         $cart_total = \Cart::session(Auth::user()->id)->getTotal();
         $tanggal_rekap = request()->tanggal_rekap;
         $shift = request()->shift;
-        $jumlah = request()->jumlah;
 
         DB::beginTransaction();
         try {
@@ -200,7 +199,7 @@ class RekapController extends Controller
                     'karyawan_id' => request()->karyawan_id[$key],
                     'tanggal_absensi' => $tanggal_rekap,
                     'shift' => $shift,
-                    'pendapatan' => ($cart_total * 40 / 100) / request()->jumlah
+                    'pendapatan' => (int)$cart_total * 40 / 100 / (int)request()->jumlah
                 ]);
             }
 
