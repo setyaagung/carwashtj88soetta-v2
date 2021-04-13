@@ -30,6 +30,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('pengeluaran', 'PengeluaranController');
     Route::resource('karyawan', 'KaryawanController');
     Route::resource('user', 'UserController');
+    Route::get('/update-status/{id}', 'UserController@update_status');
 });
 Auth::routes();
 

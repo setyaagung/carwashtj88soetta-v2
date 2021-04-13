@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Absensi;
 use App\Model\Karyawan;
 use App\Model\Paket;
 use App\Model\Rekap;
@@ -50,11 +51,13 @@ class RekapController extends Controller
             $cartData = collect($cart)->sortBy('created_at');
         }
         //total
+        $qty_total = \Cart::session(Auth::user()->id)->getTotalQuantity();
         $total = \Cart::session(Auth::user()->id)->getTotal();
         $data_total = [
+            'qty_total' => $qty_total,
             'total' => $total,
         ];
-        return view('backend.rekap.create', compact('pakets', 'cartData', 'data_total'));
+        return view('backend.rekap.create', compact('pakets', 'karyawans', 'cartData', 'data_total'));
     }
 
     /**
@@ -172,6 +175,7 @@ class RekapController extends Controller
         $cart_total = \Cart::session(Auth::user()->id)->getTotal();
         $tanggal_rekap = request()->tanggal_rekap;
         $shift = request()->shift;
+        $jumlah = request()->jumlah;
 
         DB::beginTransaction();
         try {
@@ -185,10 +189,20 @@ class RekapController extends Controller
             });
 
             $rekap = Rekap::create([
-                'tanggal_rekap' => $request->input('tanggal_rekap'),
-                'shift' => $request->input('shift'),
+                'tanggal_rekap' => $tanggal_rekap,
+                'shift' => $shift,
                 'total' => $cart_total
             ]);
+
+            foreach (request()->karyawan_id as $key => $value) {
+                Absensi::create([
+                    'rekap_id' => $rekap->id,
+                    'karyawan_id' => request()->karyawan_id[$key],
+                    'tanggal_absensi' => $tanggal_rekap,
+                    'shift' => $shift,
+                    'pendapatan' => ($cart_total * 40 / 100) / request()->jumlah
+                ]);
+            }
 
             foreach ($filterCart as $cart) {
                 RekapDetail::create([

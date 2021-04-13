@@ -99,6 +99,12 @@
                             </div>
                             <table class="table table-sm table-borderless mb-2">
                                 <tr>
+                                    <th>Total Quantity</th>
+                                    <th class="text-right font-weight-bold">
+                                        {{ $data_total['qty_total']}} Unit
+                                    </th>
+                                </tr>
+                                <tr>
                                     <th>Kantor 60%</th>
                                     <th class="text-right font-weight-bold">
                                         Rp. {{ number_format($data_total['total']*60/100,2,',','.') }}
@@ -210,8 +216,48 @@
                                 <option value="malam">Malam</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Karyawan</th>
+                                        <th>
+                                            <a href="#" class="btn btn-sm btn-success addRow"><i class="fas fa-plus"></i></a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="oke" class="body_karyawan">
+                                    <tr>
+                                        <td>
+                                            <select name="karyawan_id[]" class="form-control form-control-sm karyawan" required>
+                                                <option value="">-- Pilih Karyawan --</option>
+                                                @foreach ($karyawans as $karyawan)
+                                                    <option value="{{ $karyawan->id}}">{{ $karyawan->nama_karyawan}}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-danger remove"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="text-align: right">Jumlah</td>
+                                        <td>
+                                            <span class="jumlah">1</span>
+                                            <input id="jumlah" type="hidden" name="jumlah"/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                         <h6 class="font-weight-bold">Total :</h6>
                         <h4 class="font-weight-bold mb-5">Rp. {{ number_format($data_total['total'],2,',','.') }}</h4>
+                        <h6 class="font-weight-bold">Pendapatan Per Karyawan :</h6>
+                        <h4 class="font-weight-bold mb-5" id="pendapatan_karyawan">Rp. {{ number_format($data_total['total']*40/100,2,',','.') }}</h4>
+                        <h6 class="font-weight-bold text-primary">Pendapatan Kantor :</h6>
+                        <h4 class="font-weight-bold text-primary" id="pendapatan_kantor">Rp. {{ number_format($data_total['total']*60/100,2,',','.') }}</h4>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -236,16 +282,73 @@
         });
 
         function check(){
-                const saveButton = document.getElementById("saveButton");
-                var selectBox = document.getElementById('shift');
-                var userInput = selectBox.options[selectBox.selectedIndex].value;
-                if (userInput == '')
-                {
-                    saveButton.disabled = true;
-                }else{
-                    saveButton.disabled = false;
-                }
-                return false;
+            const saveButton = document.getElementById("saveButton");
+            var selectBox = document.getElementById('shift');
+            var userInput = selectBox.options[selectBox.selectedIndex].value;
+            if (userInput == '')
+            {
+                saveButton.disabled = true;
+            }else{
+                saveButton.disabled = false;
             }
+            return false;
+        }
+
+        $('.addRow').on('click',function(){
+            addRow();
+        });
+
+        function addRow(){
+            var tr ='';
+                    tr += '<tr>';
+                        tr += '<td>';
+                            tr += '<select name="karyawan_id[]" class="form-control form-control-sm karyawan" required>';
+                                tr += '<option value="">-- Pilih Karyawan --</option>';
+                                    tr += '@foreach ($karyawans as $karyawan)';
+                                        tr += '<option value="{{ $karyawan->id}}">{{ $karyawan->nama_karyawan}}</option>';
+                                    tr += '@endforeach';
+                            tr += '</select>';
+                        tr += '</td>';
+                        tr += '<td>';
+                            tr += '<a href="#" class="btn btn-sm btn-danger remove"><i class="fas fa-trash"></i></a>';
+                        tr += '</td>';
+                    tr += '</tr>';
+            $('.body_karyawan').append(tr);
+            var count = 0;
+            var pendapatan_karyawan = {{ $data_total['total']*40/100 }};
+            $('.jumlah').html(count + $('.body_karyawan tr').length);
+            $('#pendapatan_karyawan').html('Rp '+convertToRupiah(pendapatan_karyawan / (count + $('.body_karyawan tr').length))+',00');
+        }
+
+        $('.remove').live('click', function(){
+            var count = 0;
+            var pendapatan_karyawan = {{ $data_total['total']*40/100 }};
+            if($('.body_karyawan tr').length == 1){
+                alert('Anda tidak dapat menghapus baris terakhir');
+                $('.jumlah').html(count + $('.body_karyawan tr').length);
+                $('#pendapatan_karyawan').html('Rp '+convertToRupiah(pendapatan_karyawan / (count + $('.body_karyawan tr').length))+',00');
+            }else{
+                $(this).parent().parent().remove();
+                $('.jumlah').html(count + $('.body_karyawan tr').length);
+                $('#pendapatan_karyawan').html('Rp '+convertToRupiah(pendapatan_karyawan / (count + $('.body_karyawan tr').length))+',00');
+            }
+        });
+
+        $('input[name=jumlah]').val(0 + $('.body_karyawan tr').length);
+
+        function convertToRupiah(number) {
+
+            if (number) {
+                var rupiah = "";
+                var numberrev = number.toString().split("").reverse().join("");
+
+                for (var i = 0; i < numberrev.length; i++)
+                if (i % 3 == 0)
+                    rupiah += numberrev.substr(i, 3) + ".";
+                    return (rupiah.split("", rupiah.length - 1).reverse().join(""));
+            }else{
+                return number;
+            }
+        }
     </script>
 @endpush

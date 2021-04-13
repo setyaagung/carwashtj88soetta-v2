@@ -35,8 +35,8 @@
                                     <label for="">Jabatan</label>
                                     <select name="jabatan" class="form-control @error('jabatan') is-invalid @enderror">
                                         <option value="">-- Pilih Jabatan --</option>
-                                        <option value="kasir" {{ ($karyawan->jabatan == 'kasir' ? 'selected':'')}}>Kasir</option>
-                                        <option value="pencuci" {{ ($karyawan->jabatan == 'pencuci' ? 'selected':'')}}>Pencuci</option>
+                                        <option value="kasir" {{ ($karyawan->jabatan == 'kasir' ? 'selected':'')}}>KASIR</option>
+                                        <option value="pencuci" {{ ($karyawan->jabatan == 'pencuci' ? 'selected':'')}}>PENCUCI</option>
                                     </select>
                                     @error('jabatan')
                                         <span class="invalid-feedback" role="alert">

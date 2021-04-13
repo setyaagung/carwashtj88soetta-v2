@@ -68,7 +68,7 @@
                                                     <input type="checkbox" class="status" name="status" data-id="{{ $user->id}}">
                                                 @endif
                                             </td>
-                                            <td>{{ $user->role->name}}</td>
+                                            <td>{{ strtoupper($user->role->name)}}</td>
                                             <td>
                                                 <a href="{{ route('user.edit',$user->id)}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
                                                 <form action="{{ route('user.destroy', $user->id)}}" method="POST" class="d-inline">
@@ -88,3 +88,25 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.status').click(function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: '/update-status/'+id,
+                    type: 'GET',
+                    success: function (response) {
+                        alert('Status User Berhasil Diperbarui') ? "": location.reload();
+                        //alertify.set('notifier', 'position', 'top-right');
+                        //alertify.success(response.status);
+                    }
+                });
+
+            });
+        });
+    </script>
+@endpush

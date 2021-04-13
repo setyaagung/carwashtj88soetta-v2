@@ -60,7 +60,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration}}</td>
                                             <td>{{ $karyawan->nama_karyawan}}</td>
-                                            <td>{{ $karyawan->jabatan}}</td>
+                                            <td>{{ strtoupper($karyawan->jabatan)}}</td>
                                             <td>{{ $karyawan->alamat}}</td>
                                             <td>{{ $karyawan->no_telp}}</td>
                                             <td>
