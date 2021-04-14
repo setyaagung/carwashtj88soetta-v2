@@ -26,6 +26,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('/rekap/updatecart/{paket}', 'RekapController@updatecart')->name('rekap.updatecart');
     Route::post('/rekap/clear', 'RekapController@clear')->name('rekap.clear');
     Route::post('/rekap/verifikasi', 'RekapController@verifikasi')->name('rekap.verifikasi');
+    Route::get('/rekap/print/{id}', 'RekapController@print_rekap')->name('rekap.print');
     //pengeluaran
     Route::resource('pengeluaran', 'PengeluaranController');
     Route::resource('karyawan', 'KaryawanController');

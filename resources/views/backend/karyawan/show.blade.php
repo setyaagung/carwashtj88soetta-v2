@@ -29,11 +29,16 @@
                                                 <th>TANGGAL</th>
                                                 <th>SHIFT</th>
                                                 <th>PENDAPATAN</th>
-                                                <th>KETERANGAN</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            @foreach ($data_absensi as $absensi)
+                                                <tr>
+                                                    <td>{{ \Carbon\Carbon::parse($absensi->tanggal_absensi)->isoFormat('dddd, D MMMM Y')}}</td>
+                                                    <td>{{ strtoupper($absensi->shift)}}</td>
+                                                    <td>Rp. {{ number_format($absensi->pendapatan,0,',','.')}}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

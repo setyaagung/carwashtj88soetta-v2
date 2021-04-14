@@ -252,13 +252,19 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <h6 class="font-weight-bold">Total :</h6>
-                        <h4 class="font-weight-bold mb-5">Rp. {{ number_format($data_total['total'],2,',','.') }}</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="font-weight-bold">Total :</h6>
+                                <h4 class="font-weight-bold mb-5">Rp. {{ number_format($data_total['total'],2,',','.') }}</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="font-weight-bold text-primary">Pendapatan Kantor :</h6>
+                                <h4 class="font-weight-bold text-primary" id="pendapatan_kantor">Rp. {{ number_format($data_total['total']*60/100,2,',','.') }}</h4>
+                            </div>
+                        </div>
                         <h6 class="font-weight-bold">Pendapatan Per Karyawan :</h6>
-                        <h4 class="font-weight-bold mb-5" id="pendapatan_karyawan">Rp. {{ number_format($data_total['total']*40/100,2,',','.') }}</h4>
+                        <h4 class="font-weight-bold mb-3" id="pendapatan_karyawan">Rp. {{ number_format($data_total['total']*40/100,2,',','.') }}</h4>
                         <input type="hidden" name="pendapatan">
-                        <h6 class="font-weight-bold text-primary">Pendapatan Kantor :</h6>
-                        <h4 class="font-weight-bold text-primary" id="pendapatan_kantor">Rp. {{ number_format($data_total['total']*60/100,2,',','.') }}</h4>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -322,7 +328,7 @@
             $('input[name=jumlah]').val(count + $('.body_karyawan tr').length);
         }
 
-        $('.remove').live('click', function(){
+        $(document).on('click','.remove', function(){
             var count = 0;
             var pendapatan_karyawan = {{ $data_total['total']*40/100 }};
             if($('.body_karyawan tr').length == 1){
@@ -353,4 +359,5 @@
             }
         }
     </script>
+
 @endpush

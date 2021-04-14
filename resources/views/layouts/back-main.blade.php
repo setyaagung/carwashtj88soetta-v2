@@ -48,7 +48,7 @@
         <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('assets/dist/js/adminlte.js')}}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js">
+
         <script>
             $.widget.bridge('uibutton', $.ui.button);
              //Initialize Select2 Elements

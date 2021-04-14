@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Absensi;
 use App\Model\Bon;
 use App\Model\Karyawan;
 use App\User;
@@ -82,8 +83,9 @@ class KaryawanController extends Controller
     public function show($id)
     {
         $karyawan = Karyawan::findOrFail($id);
+        $data_absensi = Absensi::where('karyawan_id', $karyawan->id)->get();
         $data_bon = Bon::where('karyawan_id', $karyawan->id)->get();
-        return view('backend.karyawan.show', compact('karyawan', 'data_bon'));
+        return view('backend.karyawan.show', compact('karyawan', 'data_absensi', 'data_bon'));
     }
 
     /**

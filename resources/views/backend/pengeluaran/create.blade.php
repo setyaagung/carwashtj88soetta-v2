@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Keterangan</label>
-                                    <textarea name="keterangan" class="form-control" rows="3">{{ old('keterangan')}}</textarea>
+                                    <textarea name="keterangan" class="form-control" rows="3" required>{{ old('keterangan')}}</textarea>
                                 </div>
                                 <div class="float-right">
                                     <a href="{{ route('pengeluaran.index')}}" class="btn btn-secondary">Kembali</a>

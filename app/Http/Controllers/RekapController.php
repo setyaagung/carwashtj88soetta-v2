@@ -10,6 +10,7 @@ use App\Model\RekapDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class RekapController extends Controller
 {
@@ -79,7 +80,10 @@ class RekapController extends Controller
      */
     public function show($id)
     {
-        //
+        $rekap = Rekap::findOrFail($id);
+        $rekap_detail = RekapDetail::where('rekap_id', $rekap->id)->get();
+        $rekap_absensi = Absensi::where('rekap_id', $rekap->id)->get();
+        return view('backend.rekap.show', compact('rekap', 'rekap_detail', 'rekap_absensi'));
     }
 
     /**
@@ -218,5 +222,14 @@ class RekapController extends Controller
             return redirect()->back()->with('error', 'Input rekap wajib diisi semua');
         }
         return redirect()->back()->with('errorRekap', 'Ada yang salah dalam penginputan rekapitulasi');
+    }
+
+    public function print_rekap($id)
+    {
+        $rekap = Rekap::findOrFail($id);
+        $rekap_detail = RekapDetail::where('rekap_id', $rekap->id)->get();
+        $rekap_absensi = Absensi::where('rekap_id', $rekap->id)->get();
+        $pdf = PDF::loadView('backend.rekap.print_rekap', compact('rekap', 'rekap_detail', 'rekap_absensi'))->setPaper('4x6in.', 'potrait');
+        return $pdf->stream();
     }
 }

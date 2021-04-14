@@ -54,8 +54,7 @@
                                             <td>{{ strtoupper($rekap->shift)}}</td>
                                             <td>Rp. {{ number_format($rekap->total,0,',','.')}}</td>
                                             <td>
-                                                <a href="{{ route('rekap.edit',$rekap->id)}}" class="btn btn-info btn-sm"><i class="fas fa-book"></i> Lihat Detail</a>
-                                                <a href="{{ route('rekap.edit',$rekap->id)}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="{{ route('rekap.show',$rekap->id)}}" class="btn btn-info btn-sm"><i class="fas fa-book"></i> Lihat Detail</a>
                                                 <form action="{{ route('rekap.destroy', $rekap->id)}}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
