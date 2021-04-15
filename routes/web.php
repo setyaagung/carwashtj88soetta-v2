@@ -29,7 +29,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/rekap/print/{id}', 'RekapController@print_rekap')->name('rekap.print');
     //pengeluaran
     Route::resource('pengeluaran', 'PengeluaranController');
+    //karyawan
     Route::resource('karyawan', 'KaryawanController');
+    Route::get('/karyawan/{id}/filter', 'KaryawanController@filter')->name('karyawan.filter');
     Route::resource('user', 'UserController');
     Route::get('/update-status/{id}', 'UserController@update_status');
 });

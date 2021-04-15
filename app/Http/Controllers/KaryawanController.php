@@ -7,6 +7,7 @@ use App\Model\Bon;
 use App\Model\Karyawan;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KaryawanController extends Controller
 {
@@ -83,9 +84,9 @@ class KaryawanController extends Controller
     public function show($id)
     {
         $karyawan = Karyawan::findOrFail($id);
-        $data_absensi = Absensi::where('karyawan_id', $karyawan->id)->get();
-        $data_bon = Bon::where('karyawan_id', $karyawan->id)->get();
-        return view('backend.karyawan.show', compact('karyawan', 'data_absensi', 'data_bon'));
+        //$data_absensi = Absensi::where('karyawan_id', $karyawan->id)->get();
+        //$data_bon = Bon::where('karyawan_id', $karyawan->id)->get();
+        return view('backend.karyawan.show', compact('karyawan'));
     }
 
     /**
@@ -143,5 +144,21 @@ class KaryawanController extends Controller
         $karyawan = Karyawan::findOrFail($id);
         $karyawan->delete();
         return redirect()->route('karyawan.index')->with('delete', 'Data karyawan berhasil dihapus');
+    }
+
+    public function filter(Request $request, $id)
+    {
+        $karyawan = Karyawan::findOrFail($id);
+
+        $dari = date('Y-m-d', strtotime($request->dari));
+        $sampai = date('Y-m-d', strtotime($request->sampai));
+
+        $data_absensi = Absensi::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_absensi', [$dari, $sampai])->orderBy('tanggal_absensi', 'ASC')->get();
+        $data_bon = Bon::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_bon', [$dari, $sampai])->orderBy('tanggal_bon', 'ASC')->get();
+        $total_pendapatan = Absensi::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_absensi', [$dari, $sampai])->orderBy('tanggal_absensi', 'ASC')->sum('pendapatan');
+        $total_bon = Bon::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_bon', [$dari, $sampai])->orderBy('tanggal_bon', 'ASC')->sum('jumlah');
+        $gaji = $total_pendapatan - $total_bon;
+
+        return view('backend.karyawan.show', compact('karyawan', 'data_absensi', 'data_bon', 'total_pendapatan', 'total_bon', 'gaji'));
     }
 }
