@@ -159,6 +159,6 @@ class KaryawanController extends Controller
         $total_bon = Bon::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_bon', [$dari, $sampai])->orderBy('tanggal_bon', 'ASC')->sum('jumlah');
         $gaji = $total_pendapatan - $total_bon;
 
-        return view('backend.karyawan.show', compact('karyawan', 'data_absensi', 'data_bon', 'total_pendapatan', 'total_bon', 'gaji'));
+        return view('backend.karyawan.show', compact('karyawan', 'data_absensi', 'data_bon', 'total_pendapatan', 'total_bon', 'gaji', 'dari', 'sampai'));
     }
 }

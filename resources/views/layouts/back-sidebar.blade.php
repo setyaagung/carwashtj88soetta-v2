@@ -53,6 +53,35 @@
                         <p>Karyawan</p>
                     </a>
                 </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link {{ (request()->segment(1) == 'laporan-pemasukkan') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Laporan
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('laporan-pemasukkan.index')}}" class="nav-link {{ (request()->segment(1) == 'laporan-pemasukkan') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pemasukkan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pengeluaran</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pendapatan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('user.index')}}" class="nav-link {{ (request()->segment(1) == 'user') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>

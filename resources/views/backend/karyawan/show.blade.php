@@ -44,11 +44,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <h5><b><i>Pendapatan bersih berdasarkan tanggal yang dipilih</i></b></h5>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <h5><b><i> : </i></b></h5>
+                                    <div class="col-md-7">
+                                        <h5><b><i>Pendapatan bersih dari tanggal {{ \Carbon\Carbon::parse($dari)->isoFormat('D MMMM Y')}} sampai {{ \Carbon\Carbon::parse($sampai)->isoFormat('D MMMM Y')}} : </i></b></h5>
                                     </div>
                                     <div class="col-md-3">
                                         <h5><b><i>Rp. {{ number_format($gaji,0,',','.')}}</i></b></h5>

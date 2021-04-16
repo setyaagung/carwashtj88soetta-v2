@@ -42,16 +42,21 @@
                                         <th>NO</th>
                                         <th>HARI/TANGGAL REKAP</th>
                                         <th>SHIFT</th>
+                                        <th>QTY/UNIT</th>
                                         <th>TOTAL</th>
                                         <th>AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($data_rekap as $rekap)
+                                        @php
+                                            $total_qty = \App\Model\RekapDetail::where('rekap_id',$rekap->id)->sum('qty');
+                                        @endphp
                                         <tr>
                                             <td>{{ $loop->iteration}}</td>
                                             <td>{{ \Carbon\Carbon::parse($rekap->tanggal_rekap)->isoFormat('dddd, D MMMM Y')}}</td>
                                             <td>{{ strtoupper($rekap->shift)}}</td>
+                                            <td>{{ $total_qty }} Unit</td>
                                             <td>Rp. {{ number_format($rekap->total,0,',','.')}}</td>
                                             <td>
                                                 <a href="{{ route('rekap.show',$rekap->id)}}" class="btn btn-info btn-sm"><i class="fas fa-book"></i> Lihat Detail</a>
