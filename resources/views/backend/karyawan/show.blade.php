@@ -16,6 +16,30 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            @if ($message = Session::get('create'))
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    <strong>Success!</strong> {{$message}}.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                            @if ($message = Session::get('update'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Updated!</strong> {{$message}}.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                            @if ($message = Session::get('delete'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Deleted!</strong> {{$message}}.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
                             <form action="{{ route('karyawan.filter',$karyawan->id)}}" method="GET">
                                 @csrf
                                 <div class="form-row">
@@ -65,6 +89,9 @@
                                         <h3 class="card-title font-weight-bold">
                                             Absensi {{ $karyawan->nama_karyawan}}
                                         </h3>
+                                        <div class="float-right">
+                                            <a href="{{ route('create_absensi',$karyawan->id)}}" class="btn btn-sm btn-primary">Tambah</a>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-bordered table-striped table-sm">
@@ -73,6 +100,7 @@
                                                     <th>TANGGAL</th>
                                                     <th>SHIFT</th>
                                                     <th>PENDAPATAN</th>
+                                                    <th>#</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -81,15 +109,23 @@
                                                         <td>{{ \Carbon\Carbon::parse($absensi->tanggal_absensi)->isoFormat('dddd, D MMMM Y')}}</td>
                                                         <td>{{ strtoupper($absensi->shift)}}</td>
                                                         <td>Rp. {{ number_format($absensi->pendapatan,0,',','.')}}</td>
+                                                        <td>
+                                                            <a href="{{ route('edit_absensi',[$karyawan->id,$absensi->id])}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                                            <form action="{{ route('destroy_absensi',[$karyawan->id,$absensi->id])}}" class="d-inline" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini ?')"><i class="fas fa-trash"></i></button>
+                                                            </form>
+                                                        </td>
                                                     </tr>
                                                 @empty
-                                                    <td class="text-center" colspan="3">Data kosong</td>
+                                                    <td class="text-center" colspan="4">Data kosong</td>
                                                 @endforelse
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="2"><b><i>Total Pendapatan</i></b></td>
-                                                    <td><b><i>Rp. {{ number_format($total_pendapatan,0,',','.')}}</i></b></td>
+                                                    <td colspan="2"><b><i>Rp. {{ number_format($total_pendapatan,0,',','.')}}</i></b></td>
                                                 </tr>
                                             </tfoot>
                                         </table>

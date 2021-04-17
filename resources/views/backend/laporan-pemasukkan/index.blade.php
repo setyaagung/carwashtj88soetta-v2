@@ -67,20 +67,30 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse($pemasukkan as $pm)
+                                            @php
+                                                $count = 0;
+                                            @endphp
+                                            @foreach($pemasukkan as $item => $pmk)
                                                 @php
-                                                    $total_qty = \App\Model\RekapDetail::where('rekap_id',$pm->id)->sum('qty');
+                                                    $count += \App\Model\Rekap::select('tanggal_rekap')
+                                                                ->groupBy('tanggal_rekap')
+                                                                ->count();
                                                 @endphp
                                                 <tr>
-                                                    <td>{{ $loop->iteration}}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($pm->tanggal_rekap)->isoFormat('dddd, D MMMM Y')}}</td>
-                                                    <td>{{ strtoupper($pm->shift)}}</td>
-                                                    <td>{{ $total_qty }} Unit</td>
-                                                    <td>Rp. {{ number_format($pm->total,0,',','.')}}</td>
+                                                    <td rowspan="{{$count + 1}}">{{ $loop->iteration}}</td>
+                                                    <td rowspan="{{$count + 1}}">{{ $item}}</td>
+                                                    @foreach ($pmk as $pm)
+                                                        @php
+                                                            $total_qty = \App\Model\RekapDetail::where('rekap_id',$pm->id)->sum('qty');
+                                                        @endphp
+                                                            <tr>
+                                                                <td>{{ strtoupper($pm->shift)}}</td>
+                                                                <td>{{ $total_qty }} Unit</td>
+                                                                <td>Rp. {{ number_format($pm->total,0,',','.')}}</td>
+                                                            </tr>
+                                                    @endforeach
                                                 </tr>
-                                            @empty
-                                                <td class="text-center" colspan="5">Data kosong</td>
-                                            @endforelse
+                                            @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>

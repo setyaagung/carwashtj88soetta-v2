@@ -117,7 +117,9 @@ class RekapController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $rekap = Rekap::findOrFail($id);
+        $rekap->delete();
+        return redirect()->route('rekap.index')->with('delete', 'Data rekapan berhasil dihapus');
     }
 
     public function addItem($id)

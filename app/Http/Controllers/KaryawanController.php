@@ -161,4 +161,54 @@ class KaryawanController extends Controller
 
         return view('backend.karyawan.show', compact('karyawan', 'data_absensi', 'data_bon', 'total_pendapatan', 'total_bon', 'gaji', 'dari', 'sampai'));
     }
+
+    public function create_absensi($id)
+    {
+        $karyawan = Karyawan::where('id', $id)->first();
+        return view('backend.karyawan.create_absensi', compact('karyawan'));
+    }
+
+    public function store_absensi(Request $request, $id)
+    {
+        $karyawan = Karyawan::where('id', $id)->first();
+        $data = $request->all();
+        $request->validate([
+            'tanggal_absensi' => 'required',
+            'shift' => 'required',
+            'pendapatan' => 'required'
+        ]);
+        Absensi::create($data);
+        return redirect()->route('karyawan.show', $karyawan->id)->with('create', 'Data absensi dan pendapatan harian karyawan berhasil ditambahkan');
+    }
+
+    public function edit_absensi($karyawan, $id)
+    {
+        $karyawan = Karyawan::where('id', $karyawan)->first();
+        $absensi = Absensi::findOrFail($id);
+        return view('backend.karyawan.edit_absensi', compact('absensi', 'karyawan'));
+    }
+
+    public function update_absensi(Request $request, $karyawan, $id)
+    {
+        $karyawan = Karyawan::where('id', $karyawan)->first();
+        $absensi = Absensi::findOrFail($id);
+
+        $data = $request->all();
+        $request->validate([
+            'tanggal_absensi' => 'required',
+            'shift' => 'required',
+            'pendapatan' => 'required'
+        ]);
+
+        $absensi->update($data);
+        return redirect()->route('karyawan.show', $karyawan->id)->with('update', 'Data absensi dan pendapatan harian karyawan berhasil diperbarui');
+    }
+
+    public function destroy_absensi($karyawan, $id)
+    {
+        $karyawan = Karyawan::where('id', $karyawan)->first();
+        $absensi = Absensi::findOrFail($id);
+        $absensi->delete();
+        return redirect()->back()->with('delete', 'Data absensi dan pendapatan harian karyawan berhasil dihapus');
+    }
 }
