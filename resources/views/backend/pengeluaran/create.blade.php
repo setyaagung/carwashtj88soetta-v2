@@ -44,7 +44,12 @@
                                     <select name="jenis" id="jenis" class="form-control @error('jenis') is-invalid @enderror" onchange="return showkaryawan();" required>
                                         <option value="">-- Jenis --</option>
                                         <option value="bon">BON</option>
-                                        <option value="kantor">Kantor</option>
+                                        <option value="gaji">GAJI</option>
+                                        <option value="kantor">KANTOR</option>
+                                        <option value="listrik">LISTRIK</option>
+                                        <option value="shampo">SHAMPO</option>
+                                        <option value="semir">SEMIR</option>
+                                        <option value="DLL">DLL</option>
                                     </select>
                                     @error('jenis')
                                         <span class="invalid-feedback" role="alert">

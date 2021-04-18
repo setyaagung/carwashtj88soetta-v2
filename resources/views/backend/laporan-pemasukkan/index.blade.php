@@ -54,9 +54,12 @@
                                     <h3 class="card-title font-weight-bold">
                                         Laporan Pemasukkan {{ \Carbon\Carbon::parse($dari)->isoFormat('D MMMM Y')}} sampai {{ \Carbon\Carbon::parse($sampai)->isoFormat('D MMMM Y')}}
                                     </h3>
+                                    <div class="float-right">
+                                        <a href="" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"></i> <b><i>Cetak Pemasukkan</i></b></a>
+                                    </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped table-sm">
+                                    <table class="table table-bordered table-striped table-sm">
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
@@ -67,30 +70,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php
-                                                $count = 0;
-                                            @endphp
-                                            @foreach($pemasukkan as $item => $pmk)
-                                                @php
-                                                    $count += \App\Model\Rekap::select('tanggal_rekap')
-                                                                ->groupBy('tanggal_rekap')
-                                                                ->count();
-                                                @endphp
+                                            @foreach ($pemasukkan->groupBy('tanggal_rekap') as $item)
                                                 <tr>
-                                                    <td rowspan="{{$count + 1}}">{{ $loop->iteration}}</td>
-                                                    <td rowspan="{{$count + 1}}">{{ $item}}</td>
-                                                    @foreach ($pmk as $pm)
+                                                    <td rowspan="{{ count($item) + 1}}">{{ $loop->iteration}}</td>
+                                                    <td rowspan="{{ count($item) + 1}}">{{ \Carbon\Carbon::parse($item[0]['tanggal_rekap'])->isoFormat('dddd, D MMMM Y')}}</td>
+                                                    @foreach ($item as $pm)
                                                         @php
                                                             $total_qty = \App\Model\RekapDetail::where('rekap_id',$pm->id)->sum('qty');
                                                         @endphp
-                                                            <tr>
-                                                                <td>{{ strtoupper($pm->shift)}}</td>
-                                                                <td>{{ $total_qty }} Unit</td>
-                                                                <td>Rp. {{ number_format($pm->total,0,',','.')}}</td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td>{{ strtoupper($pm->shift)}}</td>
+                                                            <td>{{ $total_qty }} Unit</td>
+                                                            <td>Rp. {{ number_format($pm->total,0,',','.')}}</td>
+                                                        </tr>
                                                     @endforeach
                                                 </tr>
-                                            @endforeach
+                                        @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>
