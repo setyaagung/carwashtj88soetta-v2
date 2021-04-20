@@ -51,7 +51,7 @@ class LaporanPemasukkanController extends Controller
                 ->get();
             $total_pemasukkan = Rekap::where('shift', $shift)->whereBetween('tanggal_rekap', [$dari, $sampai])->orderBy('tanggal_rekap', 'ASC')->sum('total');
         }
-        $pdf = PDF::loadView('backend.laporan-pemasukkan.print_pemasukkan', compact('pemasukkan', 'total_pemasukkan', 'dari', 'sampai', 'shift'));
+        $pdf = PDF::loadView('backend.laporan-pemasukkan.print_pemasukkan', compact('pemasukkan', 'total_pemasukkan', 'dari', 'sampai', 'shift'))->setPaper('4x6in.', 'potrait');
         return $pdf->stream();
     }
 }

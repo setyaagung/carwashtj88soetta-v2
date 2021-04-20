@@ -75,7 +75,7 @@
                                         <h5><b><i>Rp. {{ number_format($gaji,0,',','.')}}</i></b></h5>
                                     </div>
                                     <div class="col-md-2">
-                                        <a href="" class="btn btn-danger btn-sm"><i class="fas fa-file-alt"></i> <b><i>Cetak Pendapatan</i></b></a>
+                                        <a href="{{ route('karyawan.print_gaji',[$karyawan->id,$dari,$sampai])}}" class="btn btn-danger btn-sm" target="_blank"><i class="fas fa-file-alt"></i> <b><i>Cetak Gaji</i></b></a>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +119,9 @@
                                                         </td>
                                                     </tr>
                                                 @empty
-                                                    <td class="text-center" colspan="4">Data kosong</td>
+                                                    <tr>
+                                                        <td class="text-center" colspan="4">Data kosong</td>
+                                                    </tr>
                                                 @endforelse
                                             </tbody>
                                             <tfoot>
@@ -158,7 +160,9 @@
                                                         <td>{{ $bon->keterangan}}</td>
                                                     </tr>
                                                 @empty
-                                                    <td class="text-center" colspan="3">Data kosong</td>
+                                                    <tr>
+                                                        <td class="text-center" colspan="3">Data kosong</td>
+                                                    </tr>
                                                 @endforelse
                                             </tbody>
                                             <tfoot>

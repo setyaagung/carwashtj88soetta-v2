@@ -7,7 +7,7 @@ use App\Model\Bon;
 use App\Model\Karyawan;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use PDF;
 
 class KaryawanController extends Controller
 {
@@ -210,5 +210,19 @@ class KaryawanController extends Controller
         $absensi = Absensi::findOrFail($id);
         $absensi->delete();
         return redirect()->back()->with('delete', 'Data absensi dan pendapatan harian karyawan berhasil dihapus');
+    }
+
+    public function print_gaji($id, $dari, $sampai)
+    {
+        $karyawan = Karyawan::findOrFail($id);
+
+        $data_absensi = Absensi::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_absensi', [$dari, $sampai])->orderBy('tanggal_absensi', 'ASC')->get();
+        $data_bon = Bon::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_bon', [$dari, $sampai])->orderBy('tanggal_bon', 'ASC')->get();
+        $total_pendapatan = Absensi::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_absensi', [$dari, $sampai])->orderBy('tanggal_absensi', 'ASC')->sum('pendapatan');
+        $total_bon = Bon::where('karyawan_id', $karyawan->id)->whereBetween('tanggal_bon', [$dari, $sampai])->orderBy('tanggal_bon', 'ASC')->sum('jumlah');
+        $gaji = $total_pendapatan - $total_bon;
+
+        $pdf = PDF::loadView('backend.karyawan.print_gaji', compact('karyawan', 'data_absensi', 'data_bon', 'total_pendapatan', 'total_bon', 'gaji', 'dari', 'sampai'))->setPaper('4x6in.', 'potrait');
+        return $pdf->stream();
     }
 }

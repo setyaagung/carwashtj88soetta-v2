@@ -37,6 +37,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/karyawan/{karyawan}/absensi/{id}/edit_absensi', 'KaryawanController@edit_absensi')->name('edit_absensi');
     Route::patch('/karyawan/{karyawan}/absensi/{id}', 'KaryawanController@update_absensi')->name('update_absensi');
     Route::delete('/karyawan/{karyawan}/absensi/{id}', 'KaryawanController@destroy_absensi')->name('destroy_absensi');
+    Route::get('/karyawan/{id}/print_gaji/dari={dari}/sampai={sampai}', 'KaryawanController@print_gaji')->name('karyawan.print_gaji');
     //laporan pemasukkan
     Route::get('/laporan-pemasukkan/index', 'LaporanPemasukkanController@index')->name('laporan-pemasukkan.index');
     Route::get('/laporan-pemasukkan/filter', 'LaporanPemasukkanController@filter')->name('laporan-pemasukkan.filter');
