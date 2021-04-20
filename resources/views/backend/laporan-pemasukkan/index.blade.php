@@ -34,7 +34,7 @@
                                     <div class="form-group col-md-2">
                                         <label><b>Shift</b></label>
                                         <select name="shift" class="form-control">
-                                            <option value="">ALL</option>
+                                            <option value="all">ALL</option>
                                             <option value="pagi">PAGI</option>
                                             <option value="sore">SORE</option>
                                             <option value="malam">MALAM</option>
@@ -55,7 +55,7 @@
                                         Laporan Pemasukkan {{ \Carbon\Carbon::parse($dari)->isoFormat('D MMMM Y')}} sampai {{ \Carbon\Carbon::parse($sampai)->isoFormat('D MMMM Y')}}
                                     </h3>
                                     <div class="float-right">
-                                        <a href="" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"></i> <b><i>Cetak Pemasukkan</i></b></a>
+                                        <a href="{{ route('laporan-pemasukkan.print_pemasukkan', [$dari,$sampai,$shift])}}" class="btn btn-sm btn-danger" target="_blank"><i class="fas fa-file-pdf"></i> <b><i>Cetak Pemasukkan</i></b></a>
                                     </div>
                                 </div>
                                 <div class="card-body">

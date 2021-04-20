@@ -40,6 +40,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //laporan pemasukkan
     Route::get('/laporan-pemasukkan/index', 'LaporanPemasukkanController@index')->name('laporan-pemasukkan.index');
     Route::get('/laporan-pemasukkan/filter', 'LaporanPemasukkanController@filter')->name('laporan-pemasukkan.filter');
+    Route::get('/laporan-pemasukkan/print_pemasukkan/dari={dari}/sampai={sampai}/shift={shift}', 'LaporanPemasukkanController@print_pemasukkan')->name('laporan-pemasukkan.print_pemasukkan');
     Route::resource('user', 'UserController');
     Route::get('/update-status/{id}', 'UserController@update_status');
 });
