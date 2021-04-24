@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link {{ (request()->segment(1) == 'laporan-pemasukkan') ? 'active' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->segment(1) == 'laporan-pemasukkan') ? 'active' : '' }} {{ (request()->segment(1) == 'laporan-pengeluaran') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Laporan
@@ -69,7 +69,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('laporan-pengeluaran.index')}}" class="nav-link {{ (request()->segment(1) == 'laporan-pengeluaran') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pengeluaran</p>
                             </a>

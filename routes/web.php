@@ -42,6 +42,10 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/laporan-pemasukkan/index', 'LaporanPemasukkanController@index')->name('laporan-pemasukkan.index');
     Route::get('/laporan-pemasukkan/filter', 'LaporanPemasukkanController@filter')->name('laporan-pemasukkan.filter');
     Route::get('/laporan-pemasukkan/print_pemasukkan/dari={dari}/sampai={sampai}/shift={shift}', 'LaporanPemasukkanController@print_pemasukkan')->name('laporan-pemasukkan.print_pemasukkan');
+    //laporan pengeluaran
+    Route::get('/laporan-pengeluaran/index', 'LaporanPengeluaranController@index')->name('laporan-pengeluaran.index');
+    Route::get('/laporan-pengeluaran/filter', 'LaporanPengeluaranController@filter')->name('laporan-pengeluaran.filter');
+    Route::get('/laporan-pengeluaran/print_pengeluaran/dari={dari}/sampai={sampai}/jenis={jenis}', 'LaporanPengeluaranController@print_pengeluaran')->name('laporan-pengeluaran.print_pengeluaran');
     Route::resource('user', 'UserController');
     Route::get('/update-status/{id}', 'UserController@update_status');
 });
