@@ -70,6 +70,7 @@
                                             </td>
                                             <td>{{ strtoupper($user->role->name)}}</td>
                                             <td>
+                                                <a href="{{ route('user.show',$user->id)}}" class="btn btn-sm btn-success"><i class="fas fa-cog"></i> Reset Password</a>
                                                 <a href="{{ route('user.edit',$user->id)}}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
                                                 <form action="{{ route('user.destroy', $user->id)}}" method="POST" class="d-inline">
                                                     @csrf

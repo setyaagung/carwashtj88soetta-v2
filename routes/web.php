@@ -46,8 +46,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/laporan-pengeluaran/index', 'LaporanPengeluaranController@index')->name('laporan-pengeluaran.index');
     Route::get('/laporan-pengeluaran/filter', 'LaporanPengeluaranController@filter')->name('laporan-pengeluaran.filter');
     Route::get('/laporan-pengeluaran/print_pengeluaran/dari={dari}/sampai={sampai}/jenis={jenis}', 'LaporanPengeluaranController@print_pengeluaran')->name('laporan-pengeluaran.print_pengeluaran');
+    //laporan pendapatan
+    Route::get('/laporan-pendapatan/index', 'LaporanPendapatanController@index')->name('laporan-pendapatan.index');
+    Route::get('/laporan-pendapatan/filter', 'LaporanPendapatanController@filter')->name('laporan-pendapatan.filter');
+    Route::get('/laporan-pendapatan/print_pendapatan/dari={dari}/sampai={sampai}', 'LaporanPendapatanController@print_pendapatan')->name('laporan-pendapatan.print_pendapatan');
     Route::resource('user', 'UserController');
     Route::get('/update-status/{id}', 'UserController@update_status');
+    Route::patch('/user/{id}/reset-password', 'UserController@reset_password')->name('user.reset-password');
 });
 Auth::routes();
 

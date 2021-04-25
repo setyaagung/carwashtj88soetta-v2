@@ -76,7 +76,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('backend.user.reset-password', compact('user'));
     }
 
     /**
@@ -152,5 +153,18 @@ class UserController extends Controller
         }
         $user->status = $status;
         $user->update();
+    }
+
+    public function reset_password(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+        $data = $request->all();
+        $data['password'] = bcrypt($request->input('password'));
+        $user->update($data);
+        return redirect()->route('user.index')->with('update', 'Password berhasil direset');
     }
 }
