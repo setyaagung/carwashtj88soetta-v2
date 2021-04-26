@@ -66,7 +66,7 @@ class KaryawanController extends Controller
                 'name' => $request->input('nama_karyawan'),
                 'email' => $request->input('email'),
                 'status' => 1,
-                'role_id' => 3,
+                'role_id' => 2,
                 'password' => bcrypt($request->input('password')),
             ]);
         }
@@ -126,7 +126,7 @@ class KaryawanController extends Controller
         }
         if ($data['jabatan'] == 'pencuci') {
             $user->update([
-                'role_id' => 3,
+                'role_id' => 2,
             ]);
         }
         $karyawan->update($data);

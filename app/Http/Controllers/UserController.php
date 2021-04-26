@@ -55,14 +55,6 @@ class UserController extends Controller
             Karyawan::create([
                 'user_id' => $user->id,
                 'nama_karyawan' => $user->name,
-                'jabatan' => 'kasir',
-            ]);
-        }
-        if ($data['role_id'] == 3) {
-            Karyawan::create([
-                'user_id' => $user->id,
-                'nama_karyawan' => $user->name,
-                'jabatan' => 'pencuci',
             ]);
         }
         return redirect()->route('user.index')->with('create', 'Data user berhasil ditambahkan');
@@ -118,13 +110,6 @@ class UserController extends Controller
         if ($data['role_id'] == 2) {
             $karyawan->update([
                 'nama_karyawan' => $user->name,
-                'jabatan' => 'kasir',
-            ]);
-        }
-        if ($data['role_id'] == 3) {
-            $karyawan->update([
-                'nama_karyawan' => $user->name,
-                'jabatan' => 'pencuci',
             ]);
         }
         return redirect()->route('user.index')->with('update', 'Data user berhasil diperbarui');
