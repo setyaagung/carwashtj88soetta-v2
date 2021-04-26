@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-bordered table-striped table-sm" style="width: 100%">
+                                    <table class="table table-bordered table-striped" style="width: 100%">
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
@@ -63,28 +63,16 @@
                                         <tbody>
                                             @php
                                                 $no = 1;
-                                                $qty = DB::select('SELECT shift, SUM(qty) AS qty from rekap_detail JOIN rekap ON tanggal_rekap BETWEEN :dari AND :sampai WHERE rekap.id = rekap_detail.rekap_id GROUP BY shift',[
-                                                    'dari' => $dari,
-                                                    'sampai' => $sampai
-                                                ]);
-                                                $subtotal = DB::select('SELECT shift, SUM(total) AS total FROM rekap WHERE tanggal_rekap BETWEEN :dari AND :sampai GROUP BY shift', [
-                                                    'dari' => $dari,
-                                                    'sampai' => $sampai
-                                                ]);
                                             @endphp
                                             <tr>
                                                 <td rowspan="4">{{ $no++}}</td>
                                                 <td rowspan="4">PEMASUKKAN</td>
-                                                @foreach ($qty as $q)
+                                                @foreach ($pemasukkan as $pmk)
                                                     <tr>
-                                                        <td>{{ strtoupper($q->shift)}}</td>
-                                                        <td>{{ $q->qty}}</td>
+                                                        <td>{{ strtoupper($pmk->shift)}}</td>
+                                                        <td>{{ $pmk->qty}}</td>
+                                                        <td>Rp. {{ number_format($pmk->total,0,',','.')}}</td>
                                                     </tr>
-                                                @endforeach
-                                                @foreach ($subtotal as $sb)
-                                                <tr>
-                                                    <td>Rp. {{ number_format($sb->total,0,',','.')}}</td>
-                                                </tr>
                                                 @endforeach
                                             </tr>
                                             <tr>
@@ -95,15 +83,31 @@
                                                 @endphp
                                                 <td rowspan="{{ $count + 1}}">{{ $no++}}</td>
                                                 <td rowspan="{{ $count + 1}}">PENGELUARAN</td>
-                                                @foreach ($pengeluaran as $pl)
+                                                @forelse ($pengeluaran as $pl)
                                                     <tr>
                                                         <td>{{ strtoupper($pl->jenis)}}</td>
                                                         <td>{{ $pl->count}}</td>
                                                         <td>Rp. {{ number_format($pl->jumlah,0,',','.')}}</td>
                                                     </tr>
-                                                @endforeach
+                                                @empty
+                                                    <td colspan="3" class="text-center">Data Pengeluaran Tidak Ditemukan</td>
+                                                @endforelse
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="4"><b><i>TOTAL PEMASUKKAN</i></b></td>
+                                                <td><b><i>Rp. {{ number_format($total_pemasukkan,0,',','.')}}</i></b></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4"><b><i>TOTAL PENGELUARAN</i></b></td>
+                                                <td><b><i>Rp. {{ number_format($total_pengeluaran,0,',','.')}}</i></b></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4"><b><i>TOTAL PENDAPATAN BERSIH</i></b></td>
+                                                <td><h4><b><i><u>Rp. {{ number_format($total_pemasukkan - $total_pengeluaran,0,',','.')}}</u></i></b></h4></td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

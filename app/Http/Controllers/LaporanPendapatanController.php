@@ -26,9 +26,14 @@ class LaporanPendapatanController extends Controller
         $sampai = date('Y-m-d', strtotime($request->sampai));
 
         //pemasukkan
-        $pemasukkan = Rekap::whereBetween('tanggal_rekap', [$dari, $sampai])
-            ->orderBy('tanggal_rekap', 'ASC')
-            ->get();
+        $pemasukkan = DB::select('SELECT rekap.shift, SUM(rekap.total) AS total, SUM(coalesce((SELECT SUM(rekap_detail.qty)
+                    FROM rekap_detail WHERE rekap.id = rekap_detail.rekap_id))) AS qty
+                    FROM rekap
+                    WHERE tanggal_rekap BETWEEN :dari AND :sampai
+                    GROUP BY shift', [
+            'dari' => $dari,
+            'sampai' => $sampai
+        ]);
         $total_pemasukkan = Rekap::whereBetween('tanggal_rekap', [$dari, $sampai])->orderBy('tanggal_rekap', 'ASC')->sum('total');
         //pengeluaran
         $pengeluaran = DB::select('SELECT jenis, count(jenis) as count, sum(jumlah) as jumlah FROM pengeluaran WHERE tanggal_pengeluaran BETWEEN :dari AND :sampai GROUP BY jenis', [
