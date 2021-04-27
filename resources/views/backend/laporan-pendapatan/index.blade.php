@@ -46,7 +46,7 @@
                                         Laporan Pendapatan {{ \Carbon\Carbon::parse($dari)->isoFormat('D MMMM Y')}} sampai {{ \Carbon\Carbon::parse($sampai)->isoFormat('D MMMM Y')}}
                                     </h3>
                                     <div class="float-right">
-                                        <a href="#" class="btn btn-sm btn-danger" target="_blank"><i class="fas fa-file-pdf"></i> <b><i>Cetak Pendapatan</i></b></a>
+                                        <a href="{{ route('laporan-pendapatan.print_pendapatan',[$dari,$sampai])}}" class="btn btn-sm btn-danger" target="_blank"><i class="fas fa-file-pdf"></i> <b><i>Cetak Pendapatan</i></b></a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -54,7 +54,7 @@
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
-                                                <th>JENIS</th>
+                                                <th>KATEGORI</th>
                                                 <th>SHIFT</th>
                                                 <th>QTY/UNIT</th>
                                                 <th>SUB TOTAL</th>

@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css')}}">
     </head>
     <body>
-            @yield('content')
+        @yield('content')
         <!-- Bootstrap 4 -->
         <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <!-- AdminLTE App -->

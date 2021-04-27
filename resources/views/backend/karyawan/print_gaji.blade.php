@@ -23,8 +23,8 @@
         </tr>
     </table>
 
-    <table class="table table-bordered table-striped table-sm mb-3" style="font-size: 15px:width:100%">
-        <thead>
+    <table class="table table-bordered table-sm mb-3" style="font-size: 15px:width:100%">
+        <thead class="thead-dark">
             <tr>
                 <th>NO</th>
                 <th>TANGGAL ABSENSI</th>
@@ -46,7 +46,7 @@
                 </tr>
             @endforelse
         </tbody>
-        <thead>
+        <thead class="thead-dark">
             <tr>
                 <th>NO</th>
                 <th>TANGGAL BON</th>
