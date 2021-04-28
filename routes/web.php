@@ -57,4 +57,12 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    //biodata
+    Route::get('/biodata', 'BiodataController@index')->name('biodata');
+    Route::patch('/biodata/update', 'BiodataController@update')->name('biodata.update');
+    //info gaji
+    Route::get('/informasi-gaji', 'GajiController@index')->name('informasi-gaji');
+    Route::get('/informasi-gaji/filter', 'GajiController@filter')->name('informasi-gaji.filter');
+});
