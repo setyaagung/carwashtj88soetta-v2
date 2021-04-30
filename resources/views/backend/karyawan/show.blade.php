@@ -60,6 +60,9 @@
                                     <div class="form-group col-md-2" style="margin-top: 32px">
                                         <button class="btn btn-primary form-control" type="submit">Filter</button>
                                     </div>
+                                    <div class="form-group col-md-2" style="margin-top: 32px">
+                                        <a href="{{ route('karyawan.index')}}" class="btn btn-secondary form-control">Kembali</a>
+                                    </div>
                                 </div>
                             </form>
                         </div>
