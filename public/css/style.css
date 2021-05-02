@@ -1,0 +1,129 @@
+.jumbotron a {
+    margin-top: 40px;
+    text-decoration: none;
+}
+
+.jumbotron.a {
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)),
+        url(/images/man-washing-his-car-garage.jpg) no-repeat scroll;
+    background-size: cover;
+    min-height: 600px;
+}
+
+.jumbotron h3 {
+    color: white;
+    text-align: center;
+    margin-top: 120px;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.jumbotron p {
+    color: white;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    max-width: 620px;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: -15px;
+    text-align: center;
+}
+
+.keunggulan i {
+    background-color: #4dbf1c;
+    color: white;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.keunggulan h5 {
+    color: black;
+}
+
+.keunggulan p {
+    color: #acacac;
+    margin-bottom: 40px;
+}
+
+.kontak {
+    background-color: #04091e;
+    min-height: 600px;
+}
+
+iframe {
+    width: 550px;
+    height: 351px;
+}
+
+.kontak h3,
+h5 {
+    color: white;
+}
+
+.kontak h5 {
+    margin-bottom: 30px;
+}
+
+.kontak i {
+    font-size: 24px !important;
+    width: 40px;
+    height: 45px;
+    text-align: center;
+    background: white;
+    color: #04091e;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 15px;
+}
+
+.fa-map {
+    font-size: 24px !important;
+    width: 40px;
+    height: 65px !important;
+    text-align: center;
+    background: white;
+    color: #04091e;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 15px;
+}
+
+.kontak p {
+    color: white;
+    font-size: 14px;
+    margin-top: 20px;
+    text-align: justify !important;
+}
+
+footer {
+    background-color: #04091e !important;
+    color: white;
+    border: none !important;
+}
+
+footer a {
+    color: #4dbf1c;
+}
+
+footer a:hover {
+    text-decoration: none;
+    color: #4dbf1c;
+}
+
+@media (max-width: 575.98px) and (max-width: 991.98px) {
+    iframe {
+        width: 380px;
+        height: 351px;
+    }
+
+    .jumbotron.a {
+        background-position: center;
+    }
+}

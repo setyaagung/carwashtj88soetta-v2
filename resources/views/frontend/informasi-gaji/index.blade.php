@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-primary card-outline mt-4">
                         <div class="card-body">
                             <form action="{{ route('informasi-gaji.filter')}}" method="GET">
                                 @csrf

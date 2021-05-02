@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card card-primary card-outline">
+            <div class="card card-primary card-outline mt-4">
                 <div class="card-header">
                     <h5 class="text-center">BIODATA ANDA</h5>
                 </div>

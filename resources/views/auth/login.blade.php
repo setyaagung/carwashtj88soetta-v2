@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <div class="login-box">
+        <div class="login-box mt-4">
             <div class="login-logo">
                 <p><b>LOGIN TJ88 SOETTA</b></p>
             </div>
