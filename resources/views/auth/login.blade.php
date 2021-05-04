@@ -63,3 +63,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
+@endpush
