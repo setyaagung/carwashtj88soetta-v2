@@ -23,7 +23,7 @@
         </tr>
     </table>
 
-    <table class="table table-bordered table-sm mb-3" style="font-size: 15px:width:100%">
+    <table class="table table-bordered table-sm mb-3" style="font-size: 12px:width:100%">
         <thead class="thead-dark">
             <tr>
                 <th>NO</th>
