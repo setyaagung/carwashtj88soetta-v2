@@ -70,7 +70,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($pemasukkan->groupBy('tanggal_rekap') as $item)
+                                            @forelse ($pemasukkan->groupBy('tanggal_rekap') as $item)
                                                 <tr>
                                                     <td rowspan="{{ count($item) + 1}}">{{ $loop->iteration}}</td>
                                                     <td rowspan="{{ count($item) + 1}}">{{ \Carbon\Carbon::parse($item[0]['tanggal_rekap'])->isoFormat('dddd, D MMMM Y')}}</td>
@@ -85,7 +85,9 @@
                                                         </tr>
                                                     @endforeach
                                                 </tr>
-                                        @endforeach
+                                        @empty
+                                            <td colspan="5" class="text-center">Data Pemasukkan Tidak Ditemukan</td>
+                                        @endforelse
                                         </tbody>
                                         <tfoot>
                                             <tr>

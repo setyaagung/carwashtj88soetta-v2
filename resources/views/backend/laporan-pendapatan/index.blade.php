@@ -63,17 +63,22 @@
                                         <tbody>
                                             @php
                                                 $no = 1;
+                                                $countShift = \App\Model\Rekap::whereBetween('tanggal_rekap', [$dari, $sampai])
+                                                        ->orderBy('tanggal_rekap', 'ASC')
+                                                        ->count('shift');
                                             @endphp
                                             <tr>
-                                                <td rowspan="4">{{ $no++}}</td>
-                                                <td rowspan="4">PEMASUKKAN</td>
-                                                @foreach ($pemasukkan as $pmk)
+                                                <td rowspan="{{ $countShift + 1}}">{{ $no++}}</td>
+                                                <td rowspan="{{ $countShift + 1}}">PEMASUKKAN</td>
+                                                @forelse ($pemasukkan as $pmk)
                                                     <tr>
                                                         <td>{{ strtoupper($pmk->shift)}}</td>
                                                         <td>{{ $pmk->qty}}</td>
                                                         <td>Rp. {{ number_format($pmk->total,0,',','.')}}</td>
                                                     </tr>
-                                                @endforeach
+                                                @empty
+                                                    <td colspan="3" class="text-center">Data Pemasukkan Tidak Ditemukan</td>
+                                                @endforelse
                                             </tr>
                                             <tr>
                                                 @php

@@ -74,7 +74,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($pengeluaran as $item)
+                                            @forelse ($pengeluaran as $item)
                                                 <tr>
                                                     <td>{{ $loop->iteration}}</td>
                                                     <td>{{ \Carbon\Carbon::parse($item->tanggal_pengeluaran)->isoFormat('dddd, D MMMM Y')}}</td>
@@ -82,7 +82,9 @@
                                                     <td>{{ strtoupper($item->keterangan)}}</td>
                                                     <td>Rp. {{ number_format($item->jumlah,0,',','.')}}</td>
                                                 </tr>
-                                            @endforeach
+                                            @empty
+                                                <td colspan="5" class="text-center">Data Pengeluaran Tidak Ditemukan</td>
+                                            @endforelse
                                         </tbody>
                                         <tfoot>
                                             <tr>
